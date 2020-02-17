@@ -7,8 +7,17 @@
   justify-content: center;
   border: 1px solid black;
   margin: 0 7.5px 15px;
-  background-position: center;
-  background-size: cover;
+  overflow: hidden;
+  &:hover {
+    cursor: pointer;
+    & .background-image {
+      transform: scale(1.2);
+      transition: transform 3s ease-in-out;
+    }
+    & .content {
+      opacity: 0.8;
+    }
+  }
   &.large {
     height: 380px;
   }
@@ -18,6 +27,12 @@
   &:last-child {
     margin-left: 7.5px;
   }
+  .background-image {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
   .content {
     height: 90px;
     padding: 0 25px;
@@ -26,6 +41,8 @@
     align-items: center;
     justify-content: center;
     border: 1px solid black;
+    background-color: white;
+    position: absolute;
     .title {
       font-weight: bold;
       margin-bottom: 6px;
