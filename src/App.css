@@ -2,3 +2,6 @@ body {
   font-family: 'Roboto', sans-serif;
   padding: 20px 80px;
 }
+* {
+  box-sizing: border-box;
+}
