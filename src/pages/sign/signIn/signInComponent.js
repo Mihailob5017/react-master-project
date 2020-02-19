@@ -11,7 +11,8 @@ const signInComponent = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(email + ' ' + password);
+    setEmail('');
+    setPassword('');
   };
   const handleChange = e => {
     const { name, value } = e.target;

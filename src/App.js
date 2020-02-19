@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 //  Import Css
 import './App.css';
 //  Firebase
-import { auth } from './firebase/FireBaseUtill';
+import { auth, createUserProfileDoc } from './firebase/FireBaseUtill';
 //  Import Components
 import Homepage from './pages/homepage/Homepage';
 import ShopPage from './pages/shop/ShopComponent';
@@ -16,13 +16,24 @@ const App = () => {
   useEffect(
     () =>
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      (unsubScribeFromAuth = auth.onAuthStateChanged(user => {
-        setCurrentUser(user);
+      (unsubScribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+        if (userAuth) {
+          const userRef = await createUserProfileDoc(userAuth);
+          userRef.onSnapshot(snapshot => {
+            setCurrentUser({
+              id: snapshot.id,
+              ...snapshot.data()
+            });
+          });
+        } else {
+          setCurrentUser(null);
+        }
+
+        setCurrentUser(userAuth);
         return () => {
           unsubScribeFromAuth();
         };
       })),
-
     []
   );
 
