@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 //  Import Css
 import './App.css';
 //  Firebase
@@ -9,9 +10,8 @@ import Homepage from './pages/homepage/Homepage';
 import ShopPage from './pages/shop/ShopComponent';
 import Header from './components/header/Header';
 import signComponent from './pages/sign/signComponent';
-const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-
+import { setCurrentUser } from './redux/user/userAction';
+const App = ({ setCurrentUser }) => {
   let unsubScribeFromAuth = null;
   useEffect(
     () =>
@@ -39,12 +39,15 @@ const App = () => {
 
   return (
     <Router>
-      <Header currentUser={currentUser} />
+      <Header />
       <Route exact path="/" component={Homepage} />
       <Route path="/shop" component={ShopPage} />
       <Route path="/sign" component={signComponent} />
     </Router>
   );
 };
+const mapDispachToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
 
-export default App;
+export default connect(null, mapDispachToProps)(App);

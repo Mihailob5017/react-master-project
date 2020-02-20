@@ -1,6 +1,7 @@
 import React from 'react';
 import './header.scss';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/FireBaseUtill';
 const Header = ({ currentUser }) => {
@@ -21,11 +22,16 @@ const Header = ({ currentUser }) => {
             Sign Out
           </div>
         ) : (
-          <Link className="option" to="/sign">Sign In</Link>
+          <Link className="option" to="/sign">
+            Sign In
+          </Link>
         )}
       </div>
     </div>
   );
 };
+const mapStatetoProps = state => ({
+  currentUser: state.user.currentUser
+});
 
-export default Header;
+export default connect(mapStatetoProps)(Header);
