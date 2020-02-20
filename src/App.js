@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 //  Import Css
 import './App.css';
@@ -9,9 +9,10 @@ import { auth, createUserProfileDoc } from './firebase/FireBaseUtill';
 import Homepage from './pages/homepage/Homepage';
 import ShopPage from './pages/shop/ShopComponent';
 import Header from './components/header/Header';
-import signComponent from './pages/sign/signComponent';
+import SignComponent from './pages/sign/signComponent';
 import { setCurrentUser } from './redux/user/userAction';
-const App = ({ setCurrentUser }) => {
+const App = ({ setCurrentUser, currentUser }) => {
+  console.log(currentUser);
   let unsubScribeFromAuth = null;
   useEffect(
     () =>
@@ -42,12 +43,17 @@ const App = ({ setCurrentUser }) => {
       <Header />
       <Route exact path="/" component={Homepage} />
       <Route path="/shop" component={ShopPage} />
-      <Route path="/sign" component={signComponent} />
+      <Route
+        path="/sign"
+        render={() => (currentUser ? <Redirect to="/" /> : <SignComponent />)}
+      />
     </Router>
   );
 };
 const mapDispachToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
-
-export default connect(null, mapDispachToProps)(App);
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+});
+export default connect(mapStateToProps, mapDispachToProps)(App);
