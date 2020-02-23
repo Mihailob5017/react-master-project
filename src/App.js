@@ -11,8 +11,9 @@ import ShopPage from './pages/shop/ShopComponent';
 import Header from './components/header/Header';
 import SignComponent from './pages/sign/signComponent';
 import { setCurrentUser } from './redux/user/userAction';
+import { createStructuredSelector } from 'reselect';
+import { currUserSelector } from './redux/user/userSelect';
 const App = ({ setCurrentUser, currentUser }) => {
-  console.log(currentUser);
   let unsubScribeFromAuth = null;
   useEffect(
     () =>
@@ -53,7 +54,7 @@ const App = ({ setCurrentUser, currentUser }) => {
 const mapDispachToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: currUserSelector
 });
 export default connect(mapStateToProps, mapDispachToProps)(App);
