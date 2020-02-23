@@ -13,6 +13,7 @@ import SignComponent from './pages/sign/signComponent';
 import { setCurrentUser } from './redux/user/userAction';
 import { createStructuredSelector } from 'reselect';
 import { currUserSelector } from './redux/user/userSelect';
+import Checkout from './pages/checkout/checkout';
 const App = ({ setCurrentUser, currentUser }) => {
   let unsubScribeFromAuth = null;
   useEffect(
@@ -44,6 +45,7 @@ const App = ({ setCurrentUser, currentUser }) => {
       <Header />
       <Route exact path="/" component={Homepage} />
       <Route path="/shop" component={ShopPage} />
+      <Route exact path="/checkout" component={Checkout} />
       <Route
         path="/sign"
         render={() => (currentUser ? <Redirect to="/" /> : <SignComponent />)}
