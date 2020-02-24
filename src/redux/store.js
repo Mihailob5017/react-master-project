@@ -1,14 +1,14 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { persistStore } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './rootReducer';
 
 const middlewares = [];
-const Store = createStore(
+
+export const Store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(...middlewares),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  composeWithDevTools(applyMiddleware(...middlewares))
 );
 
-export default Store;
+export const persistor = persistStore(Store);
