@@ -1,7 +1,6 @@
-import { SHOP_DATA } from './ShopData';
 import { UPDATE_COLLECTIONS } from '../reducerTypes';
 const initalState = {
-  items: SHOP_DATA
+  collections: null
 };
 
 const shopDataReducer = (state = initalState, action) => {
