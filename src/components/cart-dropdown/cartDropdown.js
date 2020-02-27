@@ -1,5 +1,10 @@
 import React from 'react';
-import CustomBtn from '../custom-button/customBtn';
+import {
+  EmptySpan,
+  CartDropdown,
+  CartItems,
+  ClickButton
+} from './cartDropdown.styles';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { selectCartItems } from '../../redux/cart/cartSelector';
@@ -9,23 +14,23 @@ import './cartDropdown.scss';
 import CartItem from '../cart-item/cartItem';
 const cartDropdown = ({ cartItems, history, dispatch }) => {
   return (
-    <div className="cart-dropdown">
-      <div className="cart-items">
+    <CartDropdown>
+      <CartItems>
         {cartItems.length ? (
           cartItems.map(item => <CartItem key={item.id} item={item} />)
         ) : (
-          <span className="empty-message">Your cart is empty</span>
+          <EmptySpan>Your cart is empty</EmptySpan>
         )}
-      </div>
-      <CustomBtn
+      </CartItems>
+      <ClickButton
         onClick={() => {
           dispatch(toggleCart());
           history.push('/checkout');
         }}
       >
         CHECKOUT
-      </CustomBtn>
-    </div>
+      </ClickButton>
+    </CartDropdown>
   );
 };
 

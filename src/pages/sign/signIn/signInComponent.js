@@ -4,7 +4,11 @@ import React, { useState } from 'react';
 import FormInput from '../../../components/form-input/formInput';
 import CustomButton from '../../../components/custom-button/customBtn';
 import { signInWithGoogle, auth } from '../../../firebase/FireBaseUtill';
-import './signInComponent.scss';
+import {
+  SignInContainer,
+  ButtonsContianer,
+  TitleContaienr
+} from './signInComponents.styles';
 const signInComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,8 +29,8 @@ const signInComponent = () => {
   };
 
   return (
-    <div className="sign-in">
-      <h2>I already have an account</h2>
+    <SignInContainer>
+      <TitleContaienr>I already have an account</TitleContaienr>
       <span>Sign in with your email and password</span>
 
       <form onSubmit={handleSubmit}>
@@ -45,14 +49,14 @@ const signInComponent = () => {
           value={password}
           handleChange={handleChange}
         />
-        <div className="buttons">
+        <ButtonsContianer>
           <CustomButton type="submit">Sign In</CustomButton>
           <CustomButton isGoogleSignIn onClick={signInWithGoogle}>
             Sign in with Google
           </CustomButton>
-        </div>
+        </ButtonsContianer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 

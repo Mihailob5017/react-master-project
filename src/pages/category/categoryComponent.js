@@ -3,17 +3,22 @@ import './categoryComponent.scss';
 import { connect } from 'react-redux';
 import { selectCathegory } from '../../redux/shop/shopdataSelector';
 import CollectionItem from '../../components/collection-item/collectionItem';
+import {
+  CategoryContainer,
+  TitleContainer,
+  ItemsContainer
+} from './categoryComponent.styles';
 const categoryComponent = ({ category }) => {
   const { title, items } = category;
   return (
-    <div className="category">
-      <h2 className="title">{title}</h2>
-      <div className="items">
+    <CategoryContainer>
+      <TitleContainer>{title}</TitleContainer>
+      <ItemsContainer>
         {items.map(item => (
           <CollectionItem key={item.id} item={item} />
         ))}
-      </div>
-    </div>
+      </ItemsContainer>
+    </CategoryContainer>
   );
 };
 //when u need to pass the param from props,u can easily do that like this,by adding another props value and adding it first once u select cathegory

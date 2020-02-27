@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import './signup.scss';
+import {SignUpContainer,TitleContainer} from './signUp.styles';
 //  Components
 import FormInput from '../../../components/form-input/formInput';
 import CustomButton from '../../../components/custom-button/customBtn';
@@ -55,8 +55,8 @@ const signUp = () => {
   };
 
   return (
-    <div className="sign-up" onSubmit={handleSubmit}>
-      <h2 className="title">I do not have a account</h2>
+    <SignUpContainer onSubmit={handleSubmit}>
+      <TitleContainer>I do not have a account</TitleContainer>
       <span>Sign up with your email and password</span>
       <form className="sign-up-form">
         <FormInput
@@ -93,7 +93,7 @@ const signUp = () => {
         />
         <CustomButton type="submit">SIGN UP</CustomButton>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 
