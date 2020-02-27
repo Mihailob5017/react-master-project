@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 //  Import Css
 import './App.css';
 //  Firebase
-import { auth, createUserProfileDoc } from './firebase/FireBaseUtill';
+import {
+  auth,
+  createUserProfileDoc,
+
+} from './firebase/FireBaseUtill';
 //  Import Components
 import Homepage from './pages/homepage/Homepage';
 import ShopPage from './pages/shop/ShopComponent';
@@ -14,7 +18,7 @@ import { setCurrentUser } from './redux/user/userAction';
 import { createStructuredSelector } from 'reselect';
 import { currUserSelector } from './redux/user/userSelect';
 import Checkout from './pages/checkout/checkout';
-const App = ({ setCurrentUser, currentUser }) => {
+const App = ({ setCurrentUser, currentUser}) => {
   let unsubScribeFromAuth = null;
   useEffect(
     () =>
@@ -57,6 +61,6 @@ const mapDispachToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 const mapStateToProps = createStructuredSelector({
-  currentUser: currUserSelector
+  currentUser: currUserSelector,
 });
 export default connect(mapStateToProps, mapDispachToProps)(App);
