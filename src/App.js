@@ -53,7 +53,7 @@ const App = ({ setCurrentUser, currentUser}) => {
       <Route
         path="/sign"
         render={() => (currentUser ? <Redirect to="/" /> : <SignComponent />)}
-      />
+      /> 
     </Router>
   );
 };

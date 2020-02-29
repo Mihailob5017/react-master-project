@@ -19,3 +19,8 @@ export const selectCathegory = collectionUrlParam =>
     //Data Normalization is storing data as objects insted of arrays
     collection => (collection ? collection[collectionUrlParam] : null)
   );
+
+export const selectIsFetching = createSelector(
+  [shopData],
+  shop => shop.isFetching
+);
