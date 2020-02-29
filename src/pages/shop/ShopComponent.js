@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { asyncFetchCollectionsStart } from '../../redux/shop/shopActions';
 import { createStructuredSelector } from 'reselect';
-import { selectIsFetching } from '../../redux/shop/shopdataSelector';
+import { selectIsFetching, selectIsLoaded } from '../../redux/shop/shopdataSelector';
 import { Route, withRouter } from 'react-router-dom';
 
 import CollectionOverview from '../../components/collection-overview/overviewCollection';
@@ -12,7 +12,7 @@ import CategoryComponent from '../category/categoryComponent';
 const CollectionOverviewWithSpinner = WithSpinner(CollectionOverview);
 const CategoryComponentWithSpinner = WithSpinner(CategoryComponent);
 
-const ShopComponent = ({ match, fetchAsyncCollections, isFetching }) => {
+const ShopComponent = ({ match, fetchAsyncCollections, isLoaded }) => {
   let unsubscribeFromSnapShot = null;
 
   useEffect(() => {
@@ -24,13 +24,13 @@ const ShopComponent = ({ match, fetchAsyncCollections, isFetching }) => {
         exact
         path={`${match.path}`}
         render={props => (
-          <CollectionOverviewWithSpinner isLoading={isFetching} {...props} />
+          <CollectionOverviewWithSpinner isLoading={!isLoaded} {...props} />
         )}
       />
       <Route
         path={`${match.path}/:id`}
         render={props => (
-          <CategoryComponentWithSpinner isLoading={isFetching} {...props} />
+          <CategoryComponentWithSpinner isLoading={!isLoaded} {...props} />
         )}
       />
     </div>
@@ -38,7 +38,8 @@ const ShopComponent = ({ match, fetchAsyncCollections, isFetching }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isFetching: selectIsFetching
+  isFetching: selectIsFetching,
+  isLoaded:selectIsLoaded
 });
 
 const mapDispatchToProps = dispatch => ({
