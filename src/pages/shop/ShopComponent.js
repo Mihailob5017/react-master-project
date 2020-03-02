@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { asyncFetchCollectionsStart } from '../../redux/shop/shopActions';
+import { fetchCollectionsStart } from '../../redux/shop/shopActions';
 import { createStructuredSelector } from 'reselect';
 import {
   selectIsFetching,
@@ -11,9 +11,9 @@ import { Route, withRouter } from 'react-router-dom';
 import CollectionOverviewContainer from '../../components/collection-overview/overviewContainer';
 import CategoryComponentContainer from '../category/categoryContainer';
 
-const ShopComponent = ({ match, fetchAsyncCollections }) => {
+const ShopComponent = ({ match, fetchCollectionsStart }) => {
   useEffect(() => {
-    fetchAsyncCollections();
+    fetchCollectionsStart();
   }, []);
   return (
     <div className="shop-page">
@@ -36,7 +36,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAsyncCollections: () => dispatch(asyncFetchCollectionsStart())
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
 });
 
 export default withRouter(

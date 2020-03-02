@@ -27,12 +27,12 @@ export const asyncFetchCollectionsStart = () => {
   };
 };
 
-const fetchCollectionsFailure = err => ({
+export const fetchCollectionsFailure = err => ({
   type: FETCH_COLLECTIONS_FAILURE,
   payload: err
 });
 
-const fetchCollectionsSuccess = collectionsMap => ({
+export const fetchCollectionsSuccess = collectionsMap => ({
   type: FETCH_COLLECTIONS_SUCCESS,
   payload: collectionsMap
 });
