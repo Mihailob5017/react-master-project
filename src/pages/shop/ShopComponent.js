@@ -2,19 +2,16 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { asyncFetchCollectionsStart } from '../../redux/shop/shopActions';
 import { createStructuredSelector } from 'reselect';
-import { selectIsFetching, selectIsLoaded } from '../../redux/shop/shopdataSelector';
+import {
+  selectIsFetching,
+  selectIsLoaded
+} from '../../redux/shop/shopdataSelector';
 import { Route, withRouter } from 'react-router-dom';
 
-import CollectionOverview from '../../components/collection-overview/overviewCollection';
-import WithSpinner from '../../components/with-spinner/withSpinner';
-import CategoryComponent from '../category/categoryComponent';
+import CollectionOverviewContainer from '../../components/collection-overview/overviewContainer';
+import CategoryComponentContainer from '../category/categoryContainer';
 
-const CollectionOverviewWithSpinner = WithSpinner(CollectionOverview);
-const CategoryComponentWithSpinner = WithSpinner(CategoryComponent);
-
-const ShopComponent = ({ match, fetchAsyncCollections, isLoaded }) => {
-  let unsubscribeFromSnapShot = null;
-
+const ShopComponent = ({ match, fetchAsyncCollections }) => {
   useEffect(() => {
     fetchAsyncCollections();
   }, []);
@@ -23,15 +20,11 @@ const ShopComponent = ({ match, fetchAsyncCollections, isLoaded }) => {
       <Route
         exact
         path={`${match.path}`}
-        render={props => (
-          <CollectionOverviewWithSpinner isLoading={!isLoaded} {...props} />
-        )}
+        component={CollectionOverviewContainer}
       />
       <Route
         path={`${match.path}/:id`}
-        render={props => (
-          <CategoryComponentWithSpinner isLoading={!isLoaded} {...props} />
-        )}
+        component={CategoryComponentContainer}
       />
     </div>
   );
@@ -39,7 +32,7 @@ const ShopComponent = ({ match, fetchAsyncCollections, isLoaded }) => {
 
 const mapStateToProps = createStructuredSelector({
   isFetching: selectIsFetching,
-  isLoaded:selectIsLoaded
+  isLoaded: selectIsLoaded
 });
 
 const mapDispatchToProps = dispatch => ({
