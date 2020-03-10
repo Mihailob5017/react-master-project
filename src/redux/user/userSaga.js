@@ -2,13 +2,17 @@ import { takeLatest, put, all, call } from 'redux-saga/effects';
 import {
   GOOGLE_SIGN_IN_START,
   EMAIL_SIGN_IN_START,
-  CHECK_USER_SESSION
+  CHECK_USER_SESSION,
+  SIGN_OUT_START
 } from '../reducerTypes';
 import {
   googleSignInFailure,
   googleSignInSuccess,
   emailSignInSuccess,
-  emailSignInFailure
+  emailSignInFailure,
+  signOutFailure,
+  signOutSuccess,
+  signOutStart
 } from './userAction';
 import {
   googleProvider,
@@ -45,12 +49,17 @@ export function* onGoogleSignInStart() {
   yield takeLatest(GOOGLE_SIGN_IN_START, signInWithGoogle);
 }
 
-export function* userSagas() {
-  yield all([
-    call(onGoogleSignInStart),
-    call(onEmailSignINStart),
-    call(isUserAuthenticated)
-  ]);
+export function* signOut() {
+  try {
+    yield auth.signOut();
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailure(error));
+  }
+}
+
+export function* onSignOutStart() {
+  yield takeLatest(SIGN_OUT_START, signOut);
 }
 
 export function* isUserAuthenticated() {
@@ -67,4 +76,12 @@ export function* isUserAuthenticated() {
 
 export function* onCheckUserSession() {
   yield takeLatest(CHECK_USER_SESSION);
+}
+export function* userSagas() {
+  yield all([
+    call(onGoogleSignInStart),
+    call(onEmailSignINStart),
+    call(isUserAuthenticated),
+    call(onSignOutStart)
+  ]);
 }

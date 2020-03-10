@@ -5,7 +5,10 @@ import {
   GOOGLE_SIGN_IN_FAILURE,
   EMAIL_SIGN_IN_START,
   EMAIL_SIGN_IN_FAILURE,
-  EMAIL_SIGN_IN_SUCCESS
+  EMAIL_SIGN_IN_SUCCESS,
+  SIGN_OUT_START,
+  SIGN_OUT_SUCCESS,
+  SIGN_OUT_FAILURE
 } from '../reducerTypes';
 const initialState = {
   currentUser: null,
@@ -38,6 +41,14 @@ const userReducer = (state = initialState, action) => {
     case EMAIL_SIGN_IN_FAILURE:
       return { ...state, error: action.payload };
 
+    case SIGN_OUT_START:
+      return { ...state };
+
+    case SIGN_OUT_SUCCESS:
+      return { ...state, currentUser: null, error: null };
+
+    case SIGN_OUT_FAILURE:
+      return { ...state, error: action.payload };
     default:
       return state;
   }
