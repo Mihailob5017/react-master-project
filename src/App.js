@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 //  Import Css
 import './App.css';
-//  Firebase
-import { auth, createUserProfileDoc } from './firebase/FireBaseUtill';
+
 //  Import Components
 import Homepage from './pages/homepage/Homepage';
 import ShopPage from './pages/shop/ShopComponent';
@@ -13,28 +12,11 @@ import SignComponent from './pages/sign/signComponent';
 import { setCurrentUser } from './redux/user/userAction';
 import { createStructuredSelector } from 'reselect';
 import { currUserSelector } from './redux/user/userSelect';
+import { checkUserSession } from './redux/user/userAction';
 import Checkout from './pages/checkout/checkout';
-const App = ({ setCurrentUser, currentUser }) => {
-  let unsubScribeFromAuth = null;
+const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // (unsubScribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDoc(userAuth);
-    //     userRef.onSnapshot(snapshot => {
-    //       setCurrentUser({
-    //         id: snapshot.id,
-    //         ...snapshot.data()
-    //       });
-    //     });
-    //   } else {
-    //     setCurrentUser(null);
-    //   }
-    //   setCurrentUser(userAuth);
-    //   return () => {
-    //     unsubScribeFromAuth();
-    //   };
-    // })),
+    checkUserSession();
   }, []);
 
   return (
@@ -51,7 +33,8 @@ const App = ({ setCurrentUser, currentUser }) => {
   );
 };
 const mapDispachToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  checkUserSession: () => dispatch(checkUserSession())
 });
 const mapStateToProps = createStructuredSelector({
   currentUser: currUserSelector

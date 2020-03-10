@@ -5,7 +5,8 @@ import {
   GOOGLE_SIGN_IN_FAILURE,
   EMAIL_SIGN_IN_FAILURE,
   EMAIL_SIGN_IN_SUCCESS,
-  EMAIL_SIGN_IN_START
+  EMAIL_SIGN_IN_START,
+  CHECK_USER_SESSION
 } from '../reducerTypes';
 export const setCurrentUser = user => ({
   type: SET_CURRENT_USER,
@@ -40,3 +41,4 @@ export const emailSignInFailure = err => ({
   type: EMAIL_SIGN_IN_FAILURE,
   payload: err
 });
+export const checkUserSession = () => ({ type: CHECK_USER_SESSION });
