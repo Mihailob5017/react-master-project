@@ -1,33 +1,25 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import {SignUpContainer,TitleContainer} from './signUp.styles';
+import { SignUpContainer, TitleContainer } from './signUp.styles';
 //  Components
 import FormInput from '../../../components/form-input/formInput';
 import CustomButton from '../../../components/custom-button/customBtn';
-import { auth, createUserProfileDoc } from '../../../firebase/FireBaseUtill';
+import { signUpStart } from '../../../redux/user/userAction';
+import { connect } from 'react-redux';
 
-const signUp = () => {
+const signUp = ({ signUpStart }) => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
-  const [passsword, setPassword] = useState('');
+  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (passsword !== confirmPassword) {
+    if (password !== confirmPassword) {
       alert(`Passwords don't match`);
       return;
     }
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        passsword
-      );
-      await createUserProfileDoc(user, { displayName });
-    } catch (error) {
-      console.error(error);
-    }
-
+    signUpStart({ email, displayName, password });
     setDisplayName('');
     setEmail('');
     setPassword('');
@@ -78,7 +70,7 @@ const signUp = () => {
         <FormInput
           type="password"
           name="password"
-          value={passsword}
+          value={password}
           label="Password"
           required
           onChange={handleChange}
@@ -96,5 +88,7 @@ const signUp = () => {
     </SignUpContainer>
   );
 };
-
-export default signUp;
+const mapDispatchToProps = dispatch => ({
+  signUpStart: object => dispatch(signUpStart(object))
+});
+export default connect(null, mapDispatchToProps)(signUp);

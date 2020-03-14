@@ -3,7 +3,8 @@ import {
   GOOGLE_SIGN_IN_START,
   EMAIL_SIGN_IN_START,
   CHECK_USER_SESSION,
-  SIGN_OUT_START
+  SIGN_OUT_START,
+  SIGN_UP_START,
 } from '../reducerTypes';
 import {
   googleSignInFailure,
@@ -12,7 +13,8 @@ import {
   emailSignInFailure,
   signOutFailure,
   signOutSuccess,
-  signOutStart
+  signUpFailute,
+  signUpSuccess
 } from './userAction';
 import {
   googleProvider,
@@ -77,11 +79,29 @@ export function* isUserAuthenticated() {
 export function* onCheckUserSession() {
   yield takeLatest(CHECK_USER_SESSION);
 }
+
+export function* onSignUpStart() {
+  yield takeLatest(SIGN_UP_START, signUpFunction);
+}
+
+export function* signUpFunction({ payload: { email, password, displayName } }) {
+  try {
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    const userRef = yield call(createUserProfileDoc, user, { displayName });
+    const snapshot = yield userRef.get();
+    yield put(emailSignInSuccess({ id: snapshot.id, ...snapshot.data() }));
+    yield put(signUpSuccess());
+  } catch (error) {
+    yield put(signUpFailute(error));
+  }
+}
+
 export function* userSagas() {
   yield all([
     call(onGoogleSignInStart),
     call(onEmailSignINStart),
     call(isUserAuthenticated),
-    call(onSignOutStart)
+    call(onSignOutStart),
+    call(onSignUpStart)
   ]);
 }

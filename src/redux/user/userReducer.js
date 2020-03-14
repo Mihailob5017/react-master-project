@@ -8,7 +8,10 @@ import {
   EMAIL_SIGN_IN_SUCCESS,
   SIGN_OUT_START,
   SIGN_OUT_SUCCESS,
-  SIGN_OUT_FAILURE
+  SIGN_OUT_FAILURE,
+  SIGN_UP_START,
+  SIGN_UP_FAILURE,
+  SIGN_UP_SUCCESS
 } from '../reducerTypes';
 const initialState = {
   currentUser: null,
@@ -49,6 +52,13 @@ const userReducer = (state = initialState, action) => {
 
     case SIGN_OUT_FAILURE:
       return { ...state, error: action.payload };
+    case SIGN_UP_START:
+      return { ...state };
+    case SIGN_UP_FAILURE:
+      return { ...state, error: action.payload };
+    case SIGN_UP_SUCCESS:
+      return { ...state };
+
     default:
       return state;
   }

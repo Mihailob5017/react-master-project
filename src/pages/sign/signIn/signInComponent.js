@@ -22,7 +22,7 @@ const signInComponent = ({ googleSignInStart, emailSignInStart }) => {
     emailSignInStart(email, password);
     setEmail('');
     setPassword('');
-  };
+  }; 
   const handleChange = e => {
     const { name, value } = e.target;
     name === 'Email' ? setEmail(value) : setPassword(value);

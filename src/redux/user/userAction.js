@@ -9,7 +9,10 @@ import {
   CHECK_USER_SESSION,
   SIGN_OUT_START,
   SIGN_OUT_SUCCESS,
-  SIGN_OUT_FAILURE
+  SIGN_OUT_FAILURE,
+  SIGN_UP_START,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE
 } from '../reducerTypes';
 export const setCurrentUser = user => ({
   type: SET_CURRENT_USER,
@@ -44,6 +47,21 @@ export const emailSignInFailure = err => ({
   type: EMAIL_SIGN_IN_FAILURE,
   payload: err
 });
+
+export const signUpStart = data => ({
+  type: SIGN_UP_START,
+  payload: data
+});
+
+export const signUpSuccess = () => ({
+  type: SIGN_UP_SUCCESS
+});
+
+export const signUpFailute = err => ({
+  type: SIGN_UP_FAILURE,
+  payload: err
+});
+
 export const checkUserSession = () => ({ type: CHECK_USER_SESSION });
 
 export const signOutStart = () => ({ type: SIGN_OUT_START });
